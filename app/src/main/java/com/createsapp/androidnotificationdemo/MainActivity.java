@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //2. Notification Builder
     //3. Notification Manager
 
-    private static final String CHANNEL_ID = "createsapp";
+    public static final String CHANNEL_ID = "createsapp";
     private static final String CHANNEL_NAME = "Creates App";
     private static final String CHANNEL_DESC = "Creates App Notification";
 
@@ -123,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() != null) {
+            startProfileActivity();
+        }
+    }
 
     private void startProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
@@ -130,18 +138,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void displayNotification() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Hurray! It is working...")
-                .setContentText("Your first notification...")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
-
-        mNotificationMgr.notify(1, mBuilder.build());
-
-
-    }
 
 }
